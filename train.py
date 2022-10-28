@@ -32,7 +32,7 @@ def train(
     time_now = time.localtime(time.time())
     save_path = save_path + f'/{model.name}/' + time.strftime('%Y%m%d%H%M%S', time_now)
     os.makedirs(save_path, exist_ok=False)
-    with open(save_path + '/simplemlp_config.gin', 'w') as f:
+    with open(save_path + '/config.gin', 'w') as f:
         f.write(gin.operative_config_str())
 
     print('\nLoding dataset...')
