@@ -4,7 +4,7 @@
 
 This is a simple MNIST classification project using [Gin Config](https://github.com/google/gin-config) and Tensorflow2
 
-You can train MNIST Classifier easily by `train.py`
+You can train MNIST Classifier by `train.py`
 
     conda env create -f environment.yaml
     conda activate gin
