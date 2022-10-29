@@ -4,8 +4,6 @@
 
 This is a simple MNIST classification project using [Gin Config](https://github.com/google/gin-config) and Tensorflow2
 
-You can train MNIST Classifier by `train.py`
-
     conda env create -f environment.yaml
     conda activate gin
     python train.py
@@ -13,7 +11,7 @@ You can train MNIST Classifier by `train.py`
 You can easily change model and log save path by `./conf/config.yaml`
     
     # ./conf/config.yaml
-    model_name: "mlp"
+    model_name: '
     save_path: './logs'
 
 Model parameters determined by `./conf/models/[model_name]_config.gin`
