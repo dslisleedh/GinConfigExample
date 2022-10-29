@@ -56,3 +56,7 @@ Model parameters determined by `./conf/models/[model_name]_config.gin`
 - VGGNet
 - ResNet
 - MLP-Mixer
+
+
+## TODO
+- Split model configs into multiple config (model, optimizer, other train-relate parameters (ex: loss_fn, epoches, patience, ...)) # gin.add_config_file_search_path()
