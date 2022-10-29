@@ -1,0 +1,2 @@
+model: resnet # simple_mlp, vggnet, resnet, mlpmixer
+save_path: ./logs

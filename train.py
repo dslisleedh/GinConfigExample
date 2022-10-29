@@ -6,17 +6,16 @@ import gin.tf.external_configurables
 
 import os
 import time
+from omegaconf import OmegaConf
 from functools import partial
 from typing import List, Tuple, Union, Optional, Sequence
 from utils import *
 
 
-@gin.configurable()
 def train(
     model: tf.keras.Model, optimizer: tf.keras.optimizers.Optimizer,
     loss_fn: tf.keras.losses.Loss, metrics: List[tf.keras.metrics.Metric],
-    epochs: int, batch_size: int, patience: int,
-    save_path: str
+    epochs: int, batch_size: int, patience: int, save_path: str
 ):
     time_now = time.localtime(time.time())
     save_path = save_path + f'/{model.name}/' + time.strftime('%Y%m%d%H%M%S', time_now)
@@ -68,4 +67,8 @@ def train(
 if __name__ == '__main__':
     load_externel_configure()
     gin.parse_config_file('./conf/mlpmixer_config.gin')
-    train()
+
+    cfg = OmegaConf.load('./conf/config.yaml')
+    cfg_model = load_model_configure()
+    cfg.update(cfg_model)
+    train(**cfg)

@@ -33,4 +33,3 @@ train.batch_size = 256
 train.epochs = 100
 train.patience = 10
 
-train.save_path = './logs'

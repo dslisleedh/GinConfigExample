@@ -1,5 +1,6 @@
 import gin
 import tensorflow as tf
+from typing import List, Tuple, Union, Optional, Sequence
 
 
 def load_externel_configure():
@@ -10,6 +11,24 @@ def load_externel_configure():
 
     gin.external_configurable(
         tf.keras.metrics.SparseCategoricalAccuracy, 'tf.keras.metrics.SparseCategoricalAccuracy')
+
+
+@gin.configurable
+def load_model_configure(
+        model: tf.keras.Model, optimizer: tf.keras.optimizers.Optimizer,
+        loss_fn: tf.keras.losses.Loss, metrics: List[tf.keras.metrics.Metric],
+        epochs: int, batch_size: int, patience: int
+):
+    cfg = {
+        'model': model,
+        'optimizer': optimizer,
+        'loss_fn': loss_fn,
+        'metrics': metrics,
+        'epochs': epochs,
+        'batch_size': batch_size,
+        'patience': patience
+    }
+    return cfg
 
 
 def preprocessing(x, y, augment: bool = False):

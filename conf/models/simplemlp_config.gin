@@ -1,18 +1,13 @@
-train.model = @MLPMixer()
+train.model = @SimpleMLP()
 
-MLPMixer.config_intro = {
-    'n_filters' : 128,
-    'patch_size' : 4
-}
-MLPMixer.config_feature_extractor = {
-    'n_layers': 8,
-    'dropout_rate': .2,
+SimpleMLP.config_feature_extractor = {
+    'n_filters': (128, 128, 128, 128, 128),
     'act': @tf.nn.gelu,
-    'expansion_rate': 4
+    'dropout_rate': 0.1
 }
-MLPMixer.config_classifier = {
-    'n_filters': (),
-    'act': @tf.nn.relu,
+SimpleMLP.config_classifier = {
+    'n_filters': (1024, ),
+    'act': @tf.nn.gelu,
     'dropout_rate': 0.5,
     'n_classes': 10
 }
@@ -26,5 +21,3 @@ train.metrics = [@tf.keras.metrics.SparseCategoricalAccuracy()]
 train.batch_size = 256
 train.epochs = 100
 train.patience = 10
-
-train.save_path = './logs'
