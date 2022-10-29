@@ -6,12 +6,13 @@ This is a simple MNIST classification project using [Gin Config](https://github.
 
 You can train MNIST Classifier easily by `train.py`
 
-    conda create -n environment.yaml
+    conda env create -f environment.yaml
     conda activate gin
     python train.py
 
 You can easily change model and log save path by `./conf/config.yaml`
-
+    
+    # ./conf/config.yaml
     model_name: "mlp"
     save_path: './logs'
 
