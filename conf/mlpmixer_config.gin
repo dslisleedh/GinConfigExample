@@ -1,0 +1,30 @@
+train.model = @MLPMixer()
+
+MLPMixer.config_intro = {
+    'n_filters' : 32,
+    'patch_size' : 4
+}
+MLPMixer.config_feature_extractor = {
+    'n_layers': 8,
+    'dropout_rate': .2
+    'act': @tf.nn.gelu,
+    'expansion_rate': 4
+}
+MLPMixer.config_classifier = {
+    'n_filters': (),
+    'act': @tf.nn.relu,
+    'dropout_rate': 0.5,
+    'n_classes': 10
+}
+
+train.optimizer = @tf.keras.optimizers.Adam()
+tf.keras.optimizers.Adam.learning_rate = 1e-5
+train.loss_fn = @tf.keras.losses.SparseCategoricalCrossentropy()
+tf.keras.losses.SparseCategoricalCrossentropy.from_logits = True
+train.metrics = [@tf.keras.metrics.SparseCategoricalAccuracy()]
+
+train.batch_size = 256
+train.epochs = 100
+train.patience = 10
+
+train.save_path = './logs'

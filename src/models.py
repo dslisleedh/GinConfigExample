@@ -1,6 +1,7 @@
 import gin
 import tensorflow as tf
 from src.layers import *
+from einops.layers.keras import Rearrange
 
 
 @gin.configurable
@@ -71,3 +72,34 @@ class ResNet(tf.keras.models.Model):
 
     def call(self, inputs, *args, **kwargs):
         return self.forward(inputs)
+
+
+@gin.configurable
+class MLPMixer(tf.keras.models.Model):
+    def __init__(
+            self, config_intro: dict, config_feature_extractor: dict, config_classifier: dict,
+    ):
+        super(MLPMixer, self).__init__()
+
+        self.forward = tf.keras.Sequential([])
+        # Intro
+        self.forward.add(
+            tf.keras.layers.Conv2D(
+                config_intro['n_filters'], config_intro['patch_size'], strides=config_intro['patch_size'],
+                padding='same'
+            )
+        )
+        self.forward.add(
+            Rearrange('b h w c -> b (h w) c')
+        )
+        # Feature Extractor
+        n_blocks = config_feature_extractor.pop('n_blocks')
+        self.forward.add([
+            MixerBlock(**config_feature_extractor) for _ in range(n_blocks)
+        ])
+        self.forward.add(tf.keras.layers.GlobalAveragePooling2D())
+        # Head
+        self.forward.add(ClassificationHead(**config_classifier))
+
+    def call(self, inputs, training: bool = False, *args, **kwargs):
+        return self.forward(inputs, training=training)

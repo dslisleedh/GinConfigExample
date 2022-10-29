@@ -5,7 +5,7 @@ from typing import List, Tuple, Union, Optional, Sequence
 
 class MLP(tf.keras.layers.Layer):
     def __init__(
-            self, n_filters: Sequence[int], act: tf.nn.relu, dropout_rate: float = 0.0
+            self, n_filters: Sequence[int], act: tf.nn, dropout_rate: float = 0.0
     ):
         super(MLP, self).__init__()
 
@@ -76,10 +76,45 @@ class ResBlock(tf.keras.layers.Layer):
         return self.forward(inputs, training=training) + self.skip(inputs)
 
 
+class MixerBlock(tf.keras.layers.Layer):
+    def __init__(self, act: tf.nn, dropout_rate: float, expansion_rate: int = 4):
+        super(MixerBlock, self).__init__()
+        self.act = act
+        self.dropout_rate = dropout_rate
+        self.expansion_rate = expansion_rate
+
+    def build(self, input_shape):
+        # Input_shape: [batch, seq_len(h * w), dim]
+        self.spatial = tf.keras.Sequential([
+            tf.keras.layers.LayerNormalization(),
+            tf.keras.layers.Dense(input_shape[-2] * self.expansion_rate),
+            tf.keras.layers.Dropout(self.dropout_rate),
+            tf.keras.layers.Lambda(self.act),
+            tf.keras.layers.Dense(input_shape[-2]),
+            tf.keras.layers.Dropout(self.dropout_rate)
+        ])
+
+        self.channel = tf.keras.Sequential([
+            tf.keras.layers.LayerNormalization(),
+            tf.keras.layers.Dense(input_shape[-1] * self.expansion_rate),
+            tf.keras.layers.Dropout(self.dropout_rate),
+            tf.keras.layers.Lambda(self.act),
+            tf.keras.layers.Dense(input_shape[-1]),
+            tf.keras.layers.Dropout(self.dropout_rate)
+        ])
+
+    def call(self, inputs, *args, **kwargs):
+        inputs = tf.transpose(inputs, [0, 2, 1])
+        inputs = inputs + self.spatial(inputs)
+        inputs = tf.transpose(inputs, [0, 2, 1])
+        inputs = inputs + self.channel(inputs)
+        return inputs
+
+
 class ClassificationHead(tf.keras.layers.Layer):
     def __init__(
-            self, n_filters: Sequence[int],  n_classes: int, act: tf.nn,
-            dropout_rate: float
+            self, n_filters: Sequence[int],  n_classes: int, act: Optional[tf.nn] = None,
+            dropout_rate: float = 0.0
     ):
         super(ClassificationHead, self).__init__()
 
@@ -89,9 +124,9 @@ class ClassificationHead(tf.keras.layers.Layer):
             self.forward.add(tf.keras.layers.Dropout(dropout_rate))
         self.forward.add(tf.keras.layers.Dense(n_classes))
 
-
     def call(self, inputs, *args, **kwargs):
         return self.forward(inputs)
+
 
 # class PrintLayer(tf.keras.layers.Layer):
 #     def __init__(self):
