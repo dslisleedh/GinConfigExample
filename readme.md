@@ -10,14 +10,15 @@ You can train MNIST Classifier easily by `train.py`
     conda activate gin
     python train.py
 
-You can easily change model and log save path by `conf/config.yaml`
+You can easily change model and log save path by `./conf/config.yaml`
 
     model_name: "mlp"
     save_path: './logs'
 
-Model parameters determined by `conf/models/[model_name]_config.gin`
-
-    odel_config.model = @MLPMixer()
+Model parameters determined by `./conf/models/[model_name]_config.gin`
+    
+    # ./conf/models/mlpmixer_config.gin
+    model_config.model = @MLPMixer()
 
     MLPMixer.config_intro = {
         'n_filters' : 128,
