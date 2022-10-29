@@ -66,9 +66,10 @@ def train(
 
 if __name__ == '__main__':
     load_externel_configure()
-    gin.parse_config_file('./conf/mlpmixer_config.gin')
 
-    cfg = OmegaConf.load('./conf/config.yaml')
+    cfg = dict(OmegaConf.load('./conf/config.yaml'))
+    gin.parse_config_file(f'./conf/models/{cfg["model_name"]}_config.gin')
+    cfg.pop('model_name')
     cfg_model = load_model_configure()
     cfg.update(cfg_model)
     train(**cfg)

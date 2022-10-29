@@ -1,2 +1,2 @@
-model: resnet # simple_mlp, vggnet, resnet, mlpmixer
+model_name: mlpmixer # simple_mlp, vggnet, resnet, mlpmixer
 save_path: ./logs

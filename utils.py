@@ -13,7 +13,7 @@ def load_externel_configure():
         tf.keras.metrics.SparseCategoricalAccuracy, 'tf.keras.metrics.SparseCategoricalAccuracy')
 
 
-@gin.configurable
+@gin.configurable(name_or_fn='model_config')
 def load_model_configure(
         model: tf.keras.Model, optimizer: tf.keras.optimizers.Optimizer,
         loss_fn: tf.keras.losses.Loss, metrics: List[tf.keras.metrics.Metric],

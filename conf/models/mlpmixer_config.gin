@@ -1,4 +1,4 @@
-train.model = @MLPMixer()
+model_config.model = @MLPMixer()
 
 MLPMixer.config_intro = {
     'n_filters' : 128,
@@ -17,12 +17,12 @@ MLPMixer.config_classifier = {
     'n_classes': 10
 }
 
-train.optimizer = @tf.keras.optimizers.Adam()
+model_config.optimizer = @tf.keras.optimizers.Adam()
 tf.keras.optimizers.Adam.learning_rate = 1e-5
-train.loss_fn = @tf.keras.losses.SparseCategoricalCrossentropy()
+model_config.loss_fn = @tf.keras.losses.SparseCategoricalCrossentropy()
 tf.keras.losses.SparseCategoricalCrossentropy.from_logits = True
-train.metrics = [@tf.keras.metrics.SparseCategoricalAccuracy()]
+model_config.metrics = [@tf.keras.metrics.SparseCategoricalAccuracy()]
 
-train.batch_size = 256
-train.epochs = 100
-train.patience = 10
+model_config.batch_size = 256
+model_config.epochs = 100
+model_config.patience = 10
