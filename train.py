@@ -66,5 +66,6 @@ def train(
 
 
 if __name__ == '__main__':
-    gin.parse_config_file('./conf/resnet_config.gin')
+    load_externel_configure()
+    gin.parse_config_file('./conf/mlpmixer_config.gin')
     train()

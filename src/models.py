@@ -93,11 +93,12 @@ class MLPMixer(tf.keras.models.Model):
             Rearrange('b h w c -> b (h w) c')
         )
         # Feature Extractor
-        n_blocks = config_feature_extractor.pop('n_blocks')
-        self.forward.add([
-            MixerBlock(**config_feature_extractor) for _ in range(n_blocks)
-        ])
-        self.forward.add(tf.keras.layers.GlobalAveragePooling2D())
+        n_layers = config_feature_extractor.pop('n_layers')
+        for _ in range(n_layers):
+            self.forward.add(
+                MixerBlock(**config_feature_extractor)
+            )
+        self.forward.add(tf.keras.layers.GlobalAveragePooling1D())
         # Head
         self.forward.add(ClassificationHead(**config_classifier))
 

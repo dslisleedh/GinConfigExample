@@ -113,7 +113,7 @@ class MixerBlock(tf.keras.layers.Layer):
 
 class ClassificationHead(tf.keras.layers.Layer):
     def __init__(
-            self, n_filters: Sequence[int],  n_classes: int, act: Optional[tf.nn] = None,
+            self, n_filters: Sequence[int],  n_classes: int, act: tf.nn,
             dropout_rate: float = 0.0
     ):
         super(ClassificationHead, self).__init__()

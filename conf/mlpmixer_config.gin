@@ -1,12 +1,12 @@
 train.model = @MLPMixer()
 
 MLPMixer.config_intro = {
-    'n_filters' : 32,
+    'n_filters' : 128,
     'patch_size' : 4
 }
 MLPMixer.config_feature_extractor = {
     'n_layers': 8,
-    'dropout_rate': .2
+    'dropout_rate': .2,
     'act': @tf.nn.gelu,
     'expansion_rate': 4
 }
