@@ -11,7 +11,7 @@ This is a simple MNIST classification project using [Gin Config](https://github.
 You can easily change model and log save path by `./conf/config.yaml`
     
     # ./conf/config.yaml
-    model_name: '
+    model_name: 'mlpmixer'
     save_path: './logs'
 
 Model parameters determined by `./conf/models/[model_name]_config.gin`
