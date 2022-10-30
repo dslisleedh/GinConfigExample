@@ -14,7 +14,7 @@ You can easily change model and log save path by `./conf/config.yaml`
     model_name: 'mlpmixer'
     save_path: './logs'
 
-Model parameters determined by `./conf/models/[model_name]_config.gin`
+Model's hyperparameters are determined by `./conf/models/[model_name]_config.gin`
     
     # ./conf/models/mlpmixer_config.gin
     model_config.model = @MLPMixer()
