@@ -8,11 +8,9 @@ This is a simple MNIST classification project using [Gin Config](https://github.
     conda activate gin
     python train.py
 
-You can easily change model and log save path by `./conf/config.yaml`
+You can easily change model by overiding model_name argument
     
-    # ./conf/config.yaml
-    model_name: 'mlpmixer'
-    save_path: './logs'
+    python train.py model_name=mlpmixer
 
 Model's hyperparameters are determined by `./conf/models/[model_name]_config.gin`
     
