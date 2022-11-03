@@ -1,2 +1,13 @@
 model_name: mlpmixer # simple_mlp, vggnet, resnet, mlpmixer
-save_path: ./logs
+
+log_prefix: ./logs/${model_name}/
+hydra:
+  run:
+    dir: ${log_prefix}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+  sweep:
+    dir: ${log_prefix}/${now:%Y-%m-%d}_${now:%H-%M-%S}
+    subdir: ''
+
+  job:
+    chdir: True
+

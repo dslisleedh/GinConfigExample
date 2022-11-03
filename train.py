@@ -3,6 +3,8 @@ import tensorflow_datasets as tfds
 from src import (layers, models)
 
 import gin.tf.external_configurables
+import hydra
+from hydra.utils import get_original_cwd
 
 import os
 import time
@@ -15,12 +17,9 @@ from utils import *
 def train(
     model: tf.keras.Model, optimizer: tf.keras.optimizers.Optimizer,
     loss_fn: tf.keras.losses.Loss, metrics: List[tf.keras.metrics.Metric],
-    epochs: int, batch_size: int, patience: int, save_path: str
+    epochs: int, batch_size: int, patience: int
 ):
-    time_now = time.localtime(time.time())
-    save_path = save_path + f'/{model.name}/' + time.strftime('%Y%m%d%H%M%S', time_now)
-    os.makedirs(save_path, exist_ok=False)
-    with open(save_path + '/config.gin', 'w') as f:
+    with open('./config.gin', 'w') as f:
         f.write(gin.operative_config_str())
 
     print('\nLoding dataset...')
@@ -43,7 +42,7 @@ def train(
             monitor='val_loss', patience=patience, restore_best_weights=True
         ),
         tf.keras.callbacks.TensorBoard(
-            log_dir=save_path + '/logs', histogram_freq=1, update_freq='batch'
+            log_dir='./logs', histogram_freq=1, update_freq='batch'
         )
     ]
     model.compile(optimizer=optimizer, loss=loss_fn, metrics=metrics)
@@ -55,21 +54,27 @@ def train(
     print('\nStart evaluating...')
     result = model.evaluate(test_ds)
     print('\nTrain Result:')
-    with open(save_path + '/result.txt', 'w') as f:
+    with open('./result.txt', 'w') as f:
         for metric, value in zip(model.metrics_names, result):
             print(f'{metric}: {value}')
             f.write(f'{metric}: {value} \n')
 
     print('\nSaving model...')
-    model.save_weights(save_path + '/model_weights')
+    model.save_weights('./model_weights')
+
+
+@hydra.main(config_path='./conf', config_name='config', version_base=None)
+def main(main_config):
+    # To prevent gin from load the config multiple times when use --multirun
+    def _main():
+        load_externel_configure()
+        gin.parse_config_file(get_original_cwd() + f'/conf/{main_config["model_name"]}_config.gin')
+        config = load_model_configure()
+        train(**config)
+        gin.clear_config()
+
+    _main()
 
 
 if __name__ == '__main__':
-    load_externel_configure()
-
-    cfg = dict(OmegaConf.load('./conf/config.yaml'))
-    gin.parse_config_file(f'./conf/models/{cfg["model_name"]}_config.gin')
-    cfg.pop('model_name')
-    cfg_model = load_model_configure()
-    cfg.update(cfg_model)
-    train(**cfg)
+    main()
