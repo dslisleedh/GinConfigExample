@@ -68,7 +68,7 @@ def main(main_config):
     # To prevent gin from load the config multiple times when use --multirun
     def _main():
         load_externel_configure()
-        gin.parse_config_file(get_original_cwd() + f'/conf/{main_config["model_name"]}_config.gin')
+        gin.parse_config_file(get_original_cwd() + f'/conf/models/{main_config.model_name}_config.gin')
         config = load_model_configure()
         train(**config)
         gin.clear_config()
