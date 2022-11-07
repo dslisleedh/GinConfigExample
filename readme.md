@@ -8,11 +8,14 @@ This is a simple MNIST classification project using [Gin Config](https://github.
     conda activate gin
     python train.py
 
-You can easily change model by overiding model_name argument
+You can easily change model by overiding model argument
     
-    python train.py model_name=mlpmixer
+    python train.py model=mlpmixer
 
-Model's hyperparameters are determined by `./conf/models/[model_name]_config.gin`
+Hyperparameters are determined by these configs.
+ - ./conf/models/[model_name].gin   # Model selection and hyperparameters
+ - ./conf/optimizer/config.gin      # Optimizer, Metrices and Loss selection and hyperparameters
+ - ./conf/others/config.gin         # Other train-related hyperparameters. ex) batch_size, epochs, ...
     
     # ./conf/models/mlpmixer_config.gin
     model_config.model = @MLPMixer()
@@ -33,18 +36,6 @@ Model's hyperparameters are determined by `./conf/models/[model_name]_config.gin
         'dropout_rate': 0.5,
         'n_classes': 10
     }
-    
-    model_config.optimizer = @tf.keras.optimizers.Adam()
-    tf.keras.optimizers.Adam.learning_rate = 1e-5
-    model_config.loss_fn = @tf.keras.losses.SparseCategoricalCrossentropy()
-    tf.keras.losses.SparseCategoricalCrossentropy.from_logits = True
-    model_config.metrics = [@tf.keras.metrics.SparseCategoricalAccuracy()]
-    
-    model_config.batch_size = 256
-    model_config.epochs = 100
-    model_config.patience = 10
-
-
 
 ## Implemented models
 
@@ -52,7 +43,3 @@ Model's hyperparameters are determined by `./conf/models/[model_name]_config.gin
 - VGGNet
 - ResNet
 - MLP-Mixer
-
-
-## TODO
-- Split model configs into multiple config (model, optimizer, other train-relate parameters (ex: loss_fn, epoches, patience, ...)) # gin.add_config_file_search_path()
