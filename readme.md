@@ -15,8 +15,10 @@ You can easily change model by overiding model argument
 Hyperparameters are determined by these configs.
  - ./conf/models/[model_name].gin   # Model selection and hyperparameters
  - ./conf/optimizer/config.gin      # Optimizer, Metrices and Loss selection and hyperparameters
- - ./conf/others/config.gin         # Other train-related hyperparameters. ex) batch_size, epochs, ...
-    
+ - ./conf/others/config.gin         # Other train-related hyperparameters. ex) batch_size, epochs, ...  
+ 
+ Config file example ...  
+ 
     # ./conf/models/mlpmixer_config.gin
     model_config.model = @MLPMixer()
 
