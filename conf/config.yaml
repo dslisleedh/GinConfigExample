@@ -1,6 +1,6 @@
-model_name: mlpmixer # simple_mlp, vggnet, resnet, mlpmixer
+model: mlpmixer # simple_mlp, vggnet, resnet, mlpmixer
 
-log_prefix: ./logs/${model_name}/
+log_prefix: ./logs/${model}/
 hydra:
   run:
     dir: ${log_prefix}/${now:%Y-%m-%d}_${now:%H-%M-%S}
