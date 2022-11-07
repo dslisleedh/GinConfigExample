@@ -1,0 +1,13 @@
+model_config.model = @SimpleMLP()
+
+SimpleMLP.config_feature_extractor = {
+    'n_filters': (128, 128, 128, 128, 128),
+    'act': @tf.nn.gelu,
+    'dropout_rate': 0.1
+}
+SimpleMLP.config_classifier = {
+    'n_filters': (1024, ),
+    'act': @tf.nn.gelu,
+    'dropout_rate': 0.5,
+    'n_classes': 10
+}

@@ -1,0 +1,13 @@
+model_config.model = @VGGNet()
+
+VGGNet.config_feature_extractor = {
+    'n_filters': (128, 256),
+    'n_layers' : (4, 4),
+    'act': @tf.nn.relu
+}
+VGGNet.config_classifier = {
+    'n_filters': (1024, 1024),
+    'act': @tf.nn.relu,
+    'dropout_rate': 0.5,
+    'n_classes': 10
+}

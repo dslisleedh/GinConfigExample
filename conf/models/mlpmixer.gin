@@ -1,0 +1,19 @@
+model_config.model = @MLPMixer()
+
+MLPMixer.config_intro = {
+    'n_filters' : 128,
+    'patch_size' : 4
+}
+MLPMixer.config_feature_extractor = {
+    'n_layers': 8,
+    'dropout_rate': .2,
+    'act': @tf.nn.gelu,
+    'expansion_rate': 4
+}
+MLPMixer.config_classifier = {
+    'n_filters': (),
+    'act': @tf.nn.relu,
+    'dropout_rate': 0.5,
+    'n_classes': 10
+}
+
