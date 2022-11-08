@@ -38,3 +38,17 @@ def preprocessing(x, y, augment: bool = False):
         x = tf.image.random_crop(x, [b, 26, 26, 1])
         x = tf.image.resize(x, [28, 28])
     return x, y
+
+
+class RunnerDecorator:
+    def __init__(self, f):
+        self.f = f
+
+    def __call__(self):
+        try :
+            self.f()
+            gin.clear_config()
+        except Exception as e:
+            print(e)
+            gin.clear_config()
+            raise e

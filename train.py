@@ -66,6 +66,7 @@ def train(
 @hydra.main(config_path='./conf', config_name='config', version_base=None)
 def main(main_config):
     # To prevent gin from load the config multiple times when use --multirun
+    @RunnerDecorator
     def _main():
         load_externel_configure()
         config_files = [
@@ -77,14 +78,7 @@ def main(main_config):
         config = load_model_configure()
         train(**config)
 
-    try:
-        _main()
-        gin.clear_config()
-    except Exception as e:
-        print(e)
-        gin.clear_config()
-        raise e
-
+    _main()
 
 if __name__ == '__main__':
     main()
