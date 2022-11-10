@@ -22,7 +22,7 @@ def train(
     with open('./config.gin', 'w') as f:
         f.write(gin.operative_config_str())
 
-    print('\nLoding dataset...')
+    print('\nLoading dataset...')
     train_ds, valid_ds, test_ds = tfds.load(
         'mnist', as_supervised=True, split=['train[:80%]', 'train[80%:]', 'test']
     )
@@ -68,7 +68,7 @@ def main(main_config):
     # To prevent gin from load the config multiple times when use --multirun
     @RunnerDecorator
     def _main():
-        load_externel_configure()
+        load_external_configure()
         config_files = [
             get_original_cwd() + '/conf/models/' + main_config.model + '.gin',
             get_original_cwd() + '/conf/optimizer/config.gin',

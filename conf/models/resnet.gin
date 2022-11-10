@@ -1,4 +1,4 @@
-model_config.model = @ResNet()
+train_config.model = @ResNet()
 
 ResNet.config_intro = {
     'n_filters' : 32

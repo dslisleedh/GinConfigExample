@@ -1,3 +1,8 @@
-model_config.batch_size = 256
-model_config.epochs = 100
-model_config.patience = 10
+train_config.loss_fn = @loss_fn/tf.keras.losses.SparseCategoricalCrossentropy()
+loss_fn/tf.keras.losses.SparseCategoricalCrossentropy.from_logits = True
+
+train_config.metrics = [@tf.keras.metrics.SparseCategoricalAccuracy()]
+
+train_config.batch_size = 256
+train_config.epochs = 100
+train_config.patience = 10

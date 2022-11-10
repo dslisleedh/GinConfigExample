@@ -1,4 +1,4 @@
-model_config.model = @SimpleMLP()
+train_config.model = @SimpleMLP()
 
 SimpleMLP.config_feature_extractor = {
     'n_filters': (128, 128, 128, 128, 128),

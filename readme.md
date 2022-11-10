@@ -13,9 +13,9 @@ You can easily change model by overiding model argument
     python train.py model=mlpmixer
 
 Hyperparameters are determined by these configs.
- - ./conf/models/[model_name].gin   # Model selection and hyperparameters
- - ./conf/optimizer/config.gin      # Optimizer, Metrices and Loss selection and hyperparameters
- - ./conf/others/config.gin         # Other train-related hyperparameters. ex) batch_size, epochs, ...  
+ - `./conf/models/[model_name].gin` (Model selection and hyperparameters)
+ - `./conf/optimizer/config.gin` (Optimizer selection and hyperparameters)
+ - `./conf/others/config.gin` (Other train-related hyperparameters. ex) loss_fn, batch_size, epochs, ...) 
  
  Config file example ...  
  
@@ -39,9 +39,9 @@ Hyperparameters are determined by these configs.
         'n_classes': 10
     }
 
-## Implemented models
+## Implemented models `model_call_name`
 
-- Classic MLP
-- VGGNet
-- ResNet
-- MLP-Mixer
+- Classic MLP `simple_mlp`
+- VGGNet `vggnet`
+- ResNet `resnet`
+- MLP-Mixer `mlpmixer`

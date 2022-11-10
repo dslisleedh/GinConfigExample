@@ -1,4 +1,4 @@
-model_config.model = @VGGNet()
+train_config.model = @VGGNet()
 
 VGGNet.config_feature_extractor = {
     'n_filters': (128, 256),
