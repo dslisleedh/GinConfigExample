@@ -1,4 +1,4 @@
-model: mlpmixer # simple_mlp, vggnet, resnet, mlpmixer
+model: mlpmixer # simplemlp, vggnet, resnet, mlpmixer
 
 log_prefix: ./logs/${model}/
 hydra:

@@ -3,7 +3,7 @@ import tensorflow as tf
 from typing import List, Tuple, Union, Optional, Sequence
 
 
-def load_externel_configure():
+def load_external_configure():
     gin.external_configurable(tf.nn.gelu, 'tf.nn.gelu')
 
     gin.external_configurable(
@@ -13,7 +13,7 @@ def load_externel_configure():
         tf.keras.metrics.SparseCategoricalAccuracy, 'tf.keras.metrics.SparseCategoricalAccuracy')
 
 
-@gin.configurable(name_or_fn='model_config')
+@gin.configurable(name_or_fn='train_config')
 def load_model_configure(
         model: tf.keras.Model, optimizer: tf.keras.optimizers.Optimizer,
         loss_fn: tf.keras.losses.Loss, metrics: List[tf.keras.metrics.Metric],

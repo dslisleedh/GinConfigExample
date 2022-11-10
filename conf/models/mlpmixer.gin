@@ -1,4 +1,4 @@
-model_config.model = @MLPMixer()
+train_config.model = @MLPMixer()
 
 MLPMixer.config_intro = {
     'n_filters' : 128,
